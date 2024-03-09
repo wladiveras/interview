@@ -1,6 +1,5 @@
 <?php
-function __autoload($class_name)
-{
+spl_autoload_register(function ($class_name) {
     $dirs = [
         'controllers/',
         'models/'
@@ -9,7 +8,7 @@ function __autoload($class_name)
     foreach ($dirs as $dir) {
         $file = $dir . $class_name . '.php';
         if (file_exists($file)) {
-            require_once($file);
+            require_once ($file);
         }
     }
-}
+});
