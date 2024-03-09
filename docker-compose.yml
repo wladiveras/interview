@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:8.0
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: interview
+      MYSQL_USER: wladi
+      MYSQL_PASSWORD: veras
+
+  web:
+    image: php:8.2-apache
+    depends_on:
+      - db
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - "8000:80"
+    restart: always
+
+volumes:
+    db_data: {}
