@@ -5,18 +5,30 @@ require_once('autoload.php');
 $url = $_SERVER['REQUEST_URI'];
 
 $routes = [
-    '/home' => ['HomeController', 'index'],
-    '/about' => ['AboutController', 'index'],
-    '/contact' => ['ContactController', 'index'],
+    ['GET', '/home', 'HomeController', 'index'],
+    ['GET', '/about', 'AboutController', 'index'],
+    ['GET', '/contact', 'ContactController', 'index'],
+    ['POST', '/contact', 'ContactController', 'store'],
+    ['PUT', '/contact/{id}', 'ContactController', 'update'],
+    ['DELETE', '/contact/{id}', 'ContactController', 'delete'],
 ];
 
 $controllerName = 'HomeController';
 $actionName = 'index';
+$matches = [];
 
-foreach ($routes as $route => $handler) {
-    if (preg_match('#^' . $route . '$#i', $url, $matches)) {
-        $controllerName = $handler[0];
-        $actionName = $handler[1];
+foreach ($routes as $route) {
+    [$method, $pattern, $handler, $action] = $route;
+
+    if ($method !== $_SERVER['REQUEST_METHOD']) {
+        continue;
+    }
+
+    $regex = '#^' . preg_replace('#\{(\w+)\}#', '(?<$1>[^/]+)', $pattern) . '$#i';
+
+    if (preg_match($regex, $url, $matches)) {
+        $controllerName = $handler;
+        $actionName = $action;
         break;
     }
 }
