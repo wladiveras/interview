@@ -1,11 +1,18 @@
+<!DOCTYPE html>
 <html>
 
 <head>
-    <title>Starting</title>
+    <title>
+        Welcome
+        <?php echo $data['name']; ?>
+    </title>
 </head>
 
 <body>
-    <h1>Hellow World</h1>
+    <h1>
+        <?php echo $data['id']; ?>:
+        <?php echo $data['name']; ?>
+    </h1>
 </body>
 
 </html>
