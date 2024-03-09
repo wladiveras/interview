@@ -16,7 +16,9 @@ A simple project but a big idea.
 
     This command will build the necessary images and start the containers in the background.
 
-4. If you want to remove the containers, networks, and volumes as well as the images, use the following command:
+4. Open your browser and go to [localhost:8000](http://localhost:8000) to use the project.
+
+5. If you want to remove the containers, networks, and volumes as well as the images, use the following command:
 
     ```bash
     docker-compose down --volumes --rmi all
