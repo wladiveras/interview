@@ -1,17 +1,10 @@
 <?php
 
 require_once('autoload.php');
+require_once('routes.php');
 
 $url = $_SERVER['REQUEST_URI'];
 
-$routes = [
-    ['GET', '/home', 'HomeController', 'index'],
-    ['GET', '/about', 'AboutController', 'index'],
-    ['GET', '/contact', 'ContactController', 'index'],
-    ['POST', '/contact', 'ContactController', 'store'],
-    ['PUT', '/contact/{id}', 'ContactController', 'update'],
-    ['DELETE', '/contact/{id}', 'ContactController', 'delete'],
-];
 
 $controllerName = 'HomeController';
 $actionName = 'index';
