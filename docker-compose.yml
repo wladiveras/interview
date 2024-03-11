@@ -1,19 +1,20 @@
-version: '3'
+version: "3"
 
 services:
   db:
     image: mysql:8.0
     volumes:
       - db_data:/var/lib/mysql
+      - ./migration:/docker-entrypoint-initdb.d
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: interview
       MYSQL_USER: wladi
       MYSQL_PASSWORD: secret
-  
+
   php:
-    build: 
+    build:
       context: .
       dockerfile: ./docker/Dockerfile
     depends_on:
@@ -37,6 +38,6 @@ volumes:
   db_data:
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind'
+      type: "none"
+      o: "bind"
       device: /docker/mysql
