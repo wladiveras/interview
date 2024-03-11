@@ -21,7 +21,6 @@ class HomeController
         $users = [
             ['id' => 1, 'name' => 'John Doe', 'email' => 'john@example.com'],
             ['id' => 2, 'name' => 'Jane Doe', 'email' => 'jane@example.com'],
-            // Add more users as needed
         ];
 
         $xml = new SimpleXMLElement('<users/>');
