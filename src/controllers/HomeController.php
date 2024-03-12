@@ -2,8 +2,10 @@
 
 class HomeController
 {
+
     public function index()
     {
+
         $model = new User();
         $data = $model->getData();
 

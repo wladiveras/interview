@@ -1,9 +1,11 @@
 <?php
 spl_autoload_register(function ($class_name) {
     $dirs = [
+        'core/',
         'controllers/',
         'models/',
         'helpers/',
+        'core/'
     ];
 
     foreach ($dirs as $dir) {
