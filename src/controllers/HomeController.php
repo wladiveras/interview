@@ -6,12 +6,14 @@ class HomeController
     public function index()
     {
 
-        $model = new User();
-        $data = $model->getUserOrders();
+        $user = new User();
+        $userOrders = $user->getOrdersByUserId(1);
+
+
 
         $response = new Response();
 
-        return $response->json($data);
+        return $response->json($userOrders);
 
         // MVC RESPONSE
         // require_once('views/home.view.php');

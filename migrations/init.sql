@@ -5,6 +5,11 @@ USE interview;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
+
+CREATE USER IF NOT EXISTS 'wladi'@'%' IDENTIFIED BY 'secret';
+
+GRANT ALL ON *.* TO 'wladi'@'%';
+
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -49,4 +54,9 @@ CREATE TABLE `orders`  (
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
+INSERT INTO `orders` VALUES (1, null, 1, 'Varinha de Sabugueiro', 100.00, 1, CURRENT_TIMESTAMP);
+INSERT INTO `orders` VALUES (1, null, 1, 'Chapeu de Palha', 150.00, 1, CURRENT_TIMESTAMP);
+INSERT INTO `orders` VALUES (1, null, 1, 'Vassoura Veloz', 30.00, 1, CURRENT_TIMESTAMP);
+
 SET FOREIGN_KEY_CHECKS = 1;
+

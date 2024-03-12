@@ -6,7 +6,7 @@ services:
     volumes:
       - db_data:/var/lib/mysql
       - ./migrations:/home/migrations
-    command: --default-authentication-plugin=mysql_native_password --init-file=/home/migrations/init.sql
+    command: --default-authentication-plugin=mysql_native_password --init-file=/home/migrations/init.sql --bind-address=0.0.0.0
     ports:
       - "3310:3306"
     restart: always
@@ -16,7 +16,7 @@ services:
       MYSQL_USER: wladi
       MYSQL_PASSWORD: secret
     networks:
-      - interview
+      - interview-network
 
   php:
     build:
@@ -28,7 +28,7 @@ services:
       - ./src:/var/www/html
     restart: always
     networks:
-      - interview
+      - interview-network
 
   nginx:
     image: nginx:latest
@@ -41,11 +41,12 @@ services:
       - php
     restart: always
     networks:
-      - interview
+      - interview-network
 
 volumes:
   db_data:
     driver: local
+
 networks:
-  interview:
+  interview-network:
     driver: bridge
