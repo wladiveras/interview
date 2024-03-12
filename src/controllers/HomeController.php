@@ -7,7 +7,7 @@ class HomeController
     {
 
         $model = new User();
-        $data = $model->getData();
+        $data = $model->getUserOrders();
 
         $response = new Response();
 
