@@ -6,7 +6,7 @@ A simple project but a big idea.
 
 1. Install Docker and Docker Compose if you haven't already.
 
-2. Open a terminal and navigate to the directory where `docker-compose.yml` file is located.
+2. Open a terminal and navigate to the directory where `docker-compose.yml` file is located, ins this case, in root dir.
 
 3. Run the following command to start the containers:
 

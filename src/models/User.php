@@ -29,7 +29,7 @@ class User
 
     public function getAllOrders()
     {
-        $this->database->query("SELECT u.id, u.name, u.email, o.id, o.user_id, o.product_name, o.price, o.quantity, o.created_at FROM users u LEFT JOIN orders o ON u.id = o.user_id LIMIT 0,150");
+        $this->database->query("SELECT u.id, u.name, u.email, o.id, o.user_id, o.product_name, o.price, o.quantity, o.created_at FROM users u LEFT JOIN orders o ON u.id = o.user_id ORDER BY o.id DESC LIMIT 0,150");
 
         $results = $this->database->resultset();
 
@@ -47,6 +47,7 @@ class User
             }
             if ($result['user_id']) {
                 $data[$userId]['orders'][] = [
+                    'id' => $result['id'],
                     'user_id' => $result['user_id'],
                     'product_name' => $result['product_name'],
                     'price' => $result['price'],
@@ -62,7 +63,7 @@ class User
 
     public function getOrdersByUserId(int $id)
     {
-        $this->database->query("SELECT u.id, u.name, u.email, o.id as order_id, o.user_id, o.product_name, o.price, o.quantity, o.created_at FROM users u LEFT JOIN orders o ON u.id = o.user_id WHERE u.id = :user_id LIMIT 0,150");
+        $this->database->query("SELECT u.id, u.name, u.email, o.id as order_id, o.user_id, o.product_name, o.price, o.quantity, o.created_at FROM users u LEFT JOIN orders o ON u.id = o.user_id WHERE u.id = :user_id ORDER BY o.id DESC LIMIT 0,150");
         $this->database->bind(":user_id", $id);
         $results = $this->database->resultset();
 
@@ -80,6 +81,7 @@ class User
             }
             if ($result['user_id']) {
                 $data[$userId]['orders'][] = [
+                    'id' => $result['id'],
                     'user_id' => $result['user_id'],
                     'product_name' => $result['product_name'],
                     'price' => $result['price'],
