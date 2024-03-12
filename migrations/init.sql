@@ -15,6 +15,8 @@ CREATE TABLE `users`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 
+INSERT INTO `users` VALUES (1, 'Wladi Granger', 'wladi@grifinoria.hogwarts');
+
 DROP TABLE IF EXISTS `stores`;
 CREATE TABLE `stores`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
