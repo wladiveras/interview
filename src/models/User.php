@@ -33,22 +33,30 @@ class User
 
         $results = $this->database->resultset();
 
+        $data = [];
+
         foreach ($results as $result) {
-            $data[] = [
-                'id' => $result['id'],
-                'name' => $result['name'],
-                'email' => $result['email'],
-                'order' => [
+            $userId = $result['id'];
+            if (!isset($data[$userId])) {
+                $data[$userId] = [
+                    'id' => $result['id'],
+                    'name' => $result['name'],
+                    'email' => $result['email'],
+                    'orders' => [],
+                ];
+            }
+            if ($result['user_id']) {
+                $data[$userId]['orders'][] = [
                     'user_id' => $result['user_id'],
                     'product_name' => $result['product_name'],
                     'price' => $result['price'],
                     'quantity' => $result['quantity'],
                     'created_at' => $result['created_at'],
-                ],
-            ];
+                ];
+            }
         }
 
-        return $data;
+        return array_values($data);
     }
 
 

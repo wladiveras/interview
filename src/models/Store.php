@@ -32,22 +32,31 @@ class Store
 
         $results = $this->database->resultset();
 
+        $data = [];
+
         foreach ($results as $result) {
-            $data[] = [
-                'id' => $result['id'],
-                'name' => $result['name'],
-                'location' => $result['location'],
-                'order' => [
+            $userId = $result['id'];
+            if (!isset($data[$userId])) {
+                $data[$userId] = [
+                    'id' => $result['id'],
+                    'name' => $result['name'],
+                    'location' => $result['location'],
+                    'orders' => [],
+                ];
+            }
+
+            if ($result['store_id']) {
+                $data[$userId]['orders'][] = [
                     'store_id' => $result['store_id'],
                     'product_name' => $result['product_name'],
                     'price' => $result['price'],
                     'quantity' => $result['quantity'],
                     'created_at' => $result['created_at'],
-                ],
-            ];
+                ];
+            }
         }
 
-        return $data;
+        return array_values($data);
     }
 
     public function getOrdersByStoreId(int $id)
