@@ -6,8 +6,8 @@ class HomeController
     public function index()
     {
 
-        $user = new User();
-        $userOrders = $user->getOrdersByUserId(1);
+        $user = new Store();
+        $userOrders = $user->getOrdersByStoreId(1);
 
 
 

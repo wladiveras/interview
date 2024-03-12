@@ -56,22 +56,32 @@ class User
     {
         $this->database->query("SELECT u.id, u.name, u.email, o.id as order_id, o.user_id, o.product_name, o.price, o.quantity, o.created_at FROM users u LEFT JOIN orders o ON u.id = o.user_id WHERE u.id = :user_id LIMIT 0,150");
         $this->database->bind(":user_id", $id);
-        $result = $this->database->single();
+        $results = $this->database->resultset();
 
-        $data[] = [
-            'id' => $result['id'],
-            'name' => $result['name'],
-            'email' => $result['email'],
-            'order' => [
-                'user_id' => $result['user_id'],
-                'product_name' => $result['product_name'],
-                'price' => $result['price'],
-                'quantity' => $result['quantity'],
-                'created_at' => $result['created_at'],
-            ],
-        ];
+        $data = [];
 
+        foreach ($results as $result) {
+            $userId = $result['id'];
+            if (!isset($data[$userId])) {
+                $data[$userId] = [
+                    'id' => $result['id'],
+                    'name' => $result['name'],
+                    'email' => $result['email'],
+                    'orders' => [],
+                ];
+            }
+            if ($result['user_id']) {
+                $data[$userId]['orders'][] = [
+                    'user_id' => $result['user_id'],
+                    'product_name' => $result['product_name'],
+                    'price' => $result['price'],
+                    'quantity' => $result['quantity'],
+                    'created_at' => $result['created_at'],
+                ];
+            }
+        }
 
-        return $data;
+        return array_values($data);
     }
+
 }

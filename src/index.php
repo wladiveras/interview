@@ -1,9 +1,12 @@
 <?php
 
+error_reporting(E_ALL & ~E_WARNING);
+
 require_once('autoload.php');
 require_once('routes.php');
 
 $url = $_SERVER['REQUEST_URI'];
+
 
 
 $controllerName = 'HomeController';
