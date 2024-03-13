@@ -19,58 +19,54 @@
 
         $("#importFile").change(function() {
             var file = document.getElementById("importFile").files[0];
-            var reader = new FileReader();
+            var fileType = file.name.split('.').pop().toLowerCase();
+            var type;
 
-            reader.onload = function(e) {
-                var data = e.target.result;
-                var fileType = file.name.split('.').pop().toLowerCase();
+            if (fileType === 'xml') {
+                type = 'xml';
+            } else if (fileType === 'xlsx') {
+                type = 'xlsx';
+            } else {
+                console.error('Unknown file type: ' + fileType);
+                return;
+            }
 
-                var type;
+            var formData = new FormData();
+            formData.append('file', file);
+            formData.append('type', type);
 
-                if (fileType === 'xml') {
-                    type = 'xml';
-                } else if (fileType === 'xlsx') {
-                    type = 'xlsx';
-                } else {
+            $.ajax({
+                url: "<?php echo APP_URL ?>/import",
+                method: "POST",
+                processData: false,
+                contentType: false,
+                data: formData,
 
-                    console.error('Unknown file type: ' + fileType);
-                    return;
-                }
-
-                $.ajax({
-                    url: "<?php echo APP_URL ?>/import",
-                    method: "POST",
-                    data: {
-                        type: type,
-                        data: data
-                    },
-
-                    success: function(response) {
-                        if (typeof response !== 'object') {
-                            try {
-                                response = JSON.parse(response);
-                            } catch (e) {
-                                console.error('Error parsing JSON:', e);
-                                return;
-                            }
+                success: function(response) {
+                    if (typeof response !== 'object') {
+                        try {
+                            console.log('Parsing JSON:', {
+                                response
+                            });
+                            response = JSON.parse(response);
+                        } catch (e) {
+                            console.error('Error parsing JSON:', e);
+                            return;
                         }
+                    }
 
-                        var hasError = response.status === "error";
+                    var hasError = response.status === "error";
 
-                        Swal.fire({
-                            title: hasError ? 'Mal feito, feito!' : 'Luminous!',
-                            text: response.message,
-                            icon: response.status,
-                            confirmButtonText: hasError ?
-                                'Tudo bem...' : 'Maravilha!'
-                        })
-                    },
-                });
-            };
-
-            reader.readAsText(file);
+                    Swal.fire({
+                        title: hasError ? 'Mal feito, feito!' : 'Luminous!',
+                        text: response.message,
+                        icon: response.status,
+                        confirmButtonText: hasError ?
+                            'Tudo bem...' : 'Maravilha!'
+                    })
+                },
+            });
         });
-
     });
     </script>
 </head>

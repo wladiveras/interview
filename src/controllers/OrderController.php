@@ -5,25 +5,26 @@ class OrderController
     public function create($data)
     {
         $response = new Response();
-        $data = $_POST;
 
-        // Import Xml data
-        if (isset($data['data']) && $data['type'] && $data['type'] === 'xml') {
-            $data = $this->importXml($data);
+        $type = $_POST['type'];
+        $file = $_FILES['data'];
 
-            if (isset($data)) { {
-                    $this->createOrder($data);
+        if ($type === 'xml') {
 
-                    return $response->json([
-                        'status' => 'success',
-                        'message' => 'Dados do arquivo importado com sucesso.',
-                    ]);
-                }
+            $data = $this->importXml($file);
+
+            if (isset($data)) {
+                $this->createOrder($data);
+
+                return $response->json([
+                    'status' => 'success',
+                    'message' => 'Dados do arquivo importado com sucesso.',
+                ]);
             }
         }
 
-        if (isset($data['data']) && $data['type'] && $data['type'] === 'xlsx') {
-            $data = $this->importExcel($data);
+        if ($type === 'xlsx') {
+            $data = $this->importExcel($file);
 
 
             if (isset($data)) {
@@ -41,12 +42,14 @@ class OrderController
     }
 
     // TODO: this can exist in a service file too, and can add a create a store if not exist instend sql file.
-    private function importXml($data)
+    private function importXml($file)
     {
         $parse = new Parse();
-        $data = urldecode($data['data']);
 
-        $data = $parse->xmlToArray($data);
+        print_r($file);
+
+
+        $data = $parse->xmlToArray($file);
 
         $result = [];
 
@@ -63,11 +66,37 @@ class OrderController
 
     private function importExcel($data)
     {
-        $parse = new Parse();
-        $data = urldecode($data['data']);
-        $data = $parse->xmlToArray($data);
+        $type = $_POST['type'];
+        $file = $_FILES['file'];
 
-        return $data;
+        $zip = new ZipArchive;
+        $res = $zip->open($file['tmp_name']);
+
+        if ($res === TRUE) {
+            $zip->extractTo('/path/to/extract/to');
+            $zip->close();
+
+            $xml = simplexml_load_file('/path/to/extract/to/xl/worksheets/sheet1.xml');
+            $rows = $xml->sheetData->row;
+
+            $csvFile = fopen('/path/to/save/file.csv', 'w');
+
+            foreach ($rows as $row) {
+                $data = [];
+
+                foreach ($row->c as $cell) {
+                    $data[] = (string) $cell->v;
+                }
+
+                fputcsv($csvFile, $data);
+            }
+
+            fclose($csvFile);
+        } else {
+            echo 'Failed to open file';
+
+        }
+
     }
 
     private function createOrder($data)
