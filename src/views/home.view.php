@@ -14,53 +14,75 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
-        $(document).ready(function () {
-            $("h1").css("color", "#0088ff");
+    $(document).ready(function() {
+        $("h1").css("color", "#0088ff");
 
-   
-            $("#xmlFile").change(function() {
-                var file = document.getElementById("xmlFile").files[0];
-                var reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    var data = e.target.result;
-                    $.ajax({
-                        url: "<?php echo APP_URL ?>/import",
-                        method: "POST",
-                        data: {
-                            type: "xml",
-                            data: data
-                        },
-                        
-                        success: function(response) {
-                            response = JSON.parse(response);
-                            
-                            var hasError = response.status === "error";
+        $("#importFile").change(function() {
+            var file = document.getElementById("importFile").files[0];
+            var reader = new FileReader();
 
-                            Swal.fire({
-                                title: hasError ? 'Mal feito, feito!' : 'Luminous!',
-                                text: response.message,
-                                icon: response.status,
-                                confirmButtonText: hasError ? 'Tudo bem...' : 'Maravilha!'
-                            })
-                        },
-                    });
-                };
+            reader.onload = function(e) {
+                var data = e.target.result;
+                var fileType = file.name.split('.').pop().toLowerCase();
 
-                reader.readAsText(file);
-            });
-          
+                var type;
+
+                if (fileType === 'xml') {
+                    type = 'xml';
+                } else if (fileType === 'xlsx') {
+                    type = 'xlsx';
+                } else {
+
+                    console.error('Unknown file type: ' + fileType);
+                    return;
+                }
+
+                $.ajax({
+                    url: "<?php echo APP_URL ?>/import",
+                    method: "POST",
+                    data: {
+                        type: type,
+                        data: data
+                    },
+
+                    success: function(response) {
+                        if (typeof response !== 'object') {
+                            try {
+                                response = JSON.parse(response);
+                            } catch (e) {
+                                console.error('Error parsing JSON:', e);
+                                return;
+                            }
+                        }
+
+                        var hasError = response.status === "error";
+
+                        Swal.fire({
+                            title: hasError ? 'Mal feito, feito!' : 'Luminous!',
+                            text: response.message,
+                            icon: response.status,
+                            confirmButtonText: hasError ?
+                                'Tudo bem...' : 'Maravilha!'
+                        })
+                    },
+                });
+            };
+
+            reader.readAsText(file);
         });
+
+    });
     </script>
 </head>
 
 <body>
     <h1>
-      
-    <input type="file" id="xmlFile" class="hidden" accept=".xml" />
-    <label for="xmlFile" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">
-        Importa dados XML
-    </label>
+
+        <input type="file" id="importFile" class="hidden" accept=".xml,.xlsx" />
+        <label for="importFile"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">
+            Importa dados
+        </label>
     </h1>
 </body>
 
