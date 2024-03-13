@@ -5,7 +5,8 @@ spl_autoload_register(function ($class_name) {
         'controllers/',
         'models/',
         'helpers/',
-        'core/'
+        'core/',
+        'config/'
     ];
 
     foreach ($dirs as $dir) {

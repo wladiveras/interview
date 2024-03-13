@@ -7,8 +7,6 @@ require_once('routes.php');
 
 $url = $_SERVER['REQUEST_URI'];
 
-
-
 $controllerName = 'HomeController';
 $actionName = 'index';
 $matches = [];

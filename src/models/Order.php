@@ -8,17 +8,22 @@ class Order
         $this->database = new Database();
     }
 
-    public function getData()
+    public function getById(int $id)
     {
-        // TODO: ADD A REAL SQL
-        return [
-            'id' => 1,
-            'store_id' => 1,
-            'user_id' => 1,
-            'product_name' => 'Areia Mágica',
-            'price' => 20,
-            'quantity' => 20,
-            'created_at' => '2020-01-01 00:00:00',
-        ];
+        $this->database->query("SELECT id, store_id, user_id, product_name, price, quantity, created_at FROM orders WHERE id = :id");
+        $this->database->bind(":id", $id);
+
+        $result = $this->database->single();
+
+        return $result;
+    }
+
+    public function getAll()
+    {
+        $this->database->query("SELECT  id, store_id, user_id, product_name, price, quantity, created_at FROM orders ORDER BY id DESC LIMIT 0,150");
+
+        $results = $this->database->resultset();
+
+        return array_values($results);
     }
 }

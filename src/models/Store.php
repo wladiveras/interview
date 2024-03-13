@@ -8,6 +8,7 @@ class Store
     {
         $this->database = new Database();
     }
+
     public function getAll()
     {
         $this->database->query("SELECT id, name, location FROM stores LIMIT 0,150");
