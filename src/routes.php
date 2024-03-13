@@ -2,5 +2,5 @@
 
 $routes = [
     ['GET', '/home', 'HomeController', 'index'],
-    ['POST', '/import', 'ServiceController', 'create'],
+    ['POST', '/import', 'OrderController', 'create'],
 ];

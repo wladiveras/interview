@@ -28,24 +28,22 @@
                         url: "<?php echo APP_URL ?>/import",
                         method: "POST",
                         data: {
+                            type: "xml",
                             data: data
                         },
+                        
                         success: function(response) {
+                            response = JSON.parse(response);
+                            
+                            var hasError = response.status === "error";
+
                             Swal.fire({
-                                title: 'Luminous!',
-                                text: response,
-                                icon: 'success',
-                                confirmButtonText: 'Maravilha!'
+                                title: hasError ? 'Mal feito, feito!' : 'Luminous!',
+                                text: response.message,
+                                icon: response.status,
+                                confirmButtonText: hasError ? 'Tudo bem...' : 'Maravilha!'
                             })
                         },
-                        error: function(xhr, status, error) {
-                            Swal.fire({
-                                title: 'Mal feito, feito!',
-                                text: error,
-                                icon: 'error',
-                                confirmButtonText: 'Tudo bem...'
-                            })
-                        }
                     });
                 };
 
