@@ -23,16 +23,16 @@
             var type;
 
             if (fileType === 'xml') {
-                type = 'xml';
+                type = 'text/xml';
             } else if (fileType === 'xlsx') {
-                type = 'xlsx';
+                type = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
             } else {
                 console.error('Unknown file type: ' + fileType);
                 return;
             }
 
             var formData = new FormData();
-            formData.append('file', file);
+            formData.append('data', file);
             formData.append('type', type);
 
             $.ajax({
@@ -41,18 +41,12 @@
                 processData: false,
                 contentType: false,
                 data: formData,
+                dataType: 'json', // Set the expected dataType to JSON
 
                 success: function(response) {
-                    if (typeof response !== 'object') {
-                        try {
-                            console.log('Parsing JSON:', {
-                                response
-                            });
-                            response = JSON.parse(response);
-                        } catch (e) {
-                            console.error('Error parsing JSON:', e);
-                            return;
-                        }
+                    if (typeof response.message !== 'string') {
+                        console.error('Error parsing response:', response);
+                        return;
                     }
 
                     var hasError = response.status === "error";

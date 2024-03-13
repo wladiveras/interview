@@ -4,6 +4,7 @@ class Parse
 {
     public function xmlToArray($file)
     {
+
         $xml = simplexml_load_file($file['tmp_name']);
 
         if ($xml === false) {

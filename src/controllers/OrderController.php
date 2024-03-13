@@ -2,14 +2,14 @@
 
 class OrderController
 {
-    public function create($data)
+    public function create()
     {
         $response = new Response();
 
         $type = $_POST['type'];
         $file = $_FILES['data'];
 
-        if ($type === 'xml') {
+        if ($type === 'text/xml') {
 
             $data = $this->importXml($file);
 
@@ -23,7 +23,7 @@ class OrderController
             }
         }
 
-        if ($type === 'xlsx') {
+        if ($type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
             $data = $this->importExcel($file);
 
 
@@ -45,9 +45,6 @@ class OrderController
     private function importXml($file)
     {
         $parse = new Parse();
-
-        print_r($file);
-
 
         $data = $parse->xmlToArray($file);
 

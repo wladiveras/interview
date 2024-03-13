@@ -1,6 +1,6 @@
 <?php
 
-error_reporting(E_ALL & ~E_WARNING);
+error_reporting(0);
 
 require_once('autoload.php');
 require_once('routes.php');
@@ -33,4 +33,3 @@ if (!empty($controllerName) && !empty($actionName)) {
 } else {
     echo '404 Not Found';
 }
-
