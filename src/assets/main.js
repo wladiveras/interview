@@ -287,7 +287,8 @@ $(document).ready(function () {
             '<td class="border p-4">' + response[i].user_id + "</td>";
         }
         allOrders +=
-          '<td class="border p-4">' + response[i].product_name + "</td>";
+          '<td class="border p-4">' + response[i].product_name ||
+          "Sumiu" + "</td>";
         allOrders += '<td class="border p-4">' + response[i].price + "</td>";
         allOrders += '<td class="border p-4">' + response[i].quantity + "</td>";
         allOrders +=
