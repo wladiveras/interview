@@ -26,41 +26,27 @@ class HomeController
     {
         $orders = $this->order->getAll();
 
-        $this->response->json([
-            'status' => $orders ? 'success' : 'error',
-            'data' => $orders,
-        ]);
+        $this->response->json($orders);
     }
 
-    public function getOrderById($id)
+    public function getOrderById($request)
     {
-        $order = $this->order->getById($id);
+        $order = $this->order->getById($request['id']);
 
-        $this->response->json([
-            'status' => $order ? 'success' : 'error',
-            'data' => $order,
-        ]);
+        $this->response->json($order);
     }
 
-    public function getUserOrders($id)
+    public function getUserOrders($request)
     {
-        $order = $this->user->getById($id);
+        $order = $this->user->getOrdersByUserId($request['id']);
 
-        $this->response->json([
-            'status' => $order ? 'success' : 'error',
-            'data' => $order,
-        ]);
+        $this->response->json($order);
     }
 
-    public function getStoreOrders($id)
+    public function getStoreOrders($request)
     {
-        $order = $this->store->getById($id);
+        $order = $this->store->getOrdersByStoreId($request['id']);
 
-        $this->response->json([
-            'status' => $order ? 'success' : 'error',
-            'data' => $order,
-        ]);
+        $this->response->json($order);
     }
-
-
 }

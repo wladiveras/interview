@@ -9,7 +9,7 @@ class User
         $this->database = new Database();
     }
 
-    public function getAll()
+    public function getAll(): array
     {
         $this->database->query("SELECT id, name, email FROM users LIMIT 0,150");
 
