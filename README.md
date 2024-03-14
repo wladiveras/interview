@@ -2,9 +2,9 @@
 
 A simple project but a big idea.
 
-## Steps to Run Docker Compose
+## Steps to Interview Project
 
-1. Install Docker and Docker Compose if you haven't already.
+1. Install [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/) if you haven't already.
 
 2. Open a terminal and navigate to the directory where `docker-compose.yml` file is located, ins this case, in root dir.
 

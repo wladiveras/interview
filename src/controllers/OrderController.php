@@ -15,7 +15,6 @@ class OrderController
         $this->store = new Store();
         $this->parse = new Parse();
         $this->response = new Response();
-
     }
 
     public function create()
@@ -58,7 +57,7 @@ class OrderController
         ]);
     }
 
-    // TODO: this can exist in a service file too, and can add a create a store if not exist instend sql file.
+    // TODO: this can exist in a service file too.
     private function importXml($file)
     {
 
@@ -79,6 +78,7 @@ class OrderController
         return $result;
     }
 
+    // TODO: this can exist in a service file too.
     private function importExcel($file)
     {
         return $this->parse->parseExcel($file);
