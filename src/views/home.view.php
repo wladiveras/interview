@@ -15,6 +15,27 @@
 
     <script>
     $(document).ready(function() {
+
+
+        const {
+            value: ipAddress
+        } = await Swal.fire({
+            title: "Informe o id do usuario",
+            input: "text",
+            inputLabel: "Id do usuario",
+            inputValue,
+            showCancelButton: true,
+            inputValidator: (value) => {
+                if (!value) {
+                    return "Digite um id valido";
+                }
+            }
+        });
+        if (ipAddress) {
+            Swal.fire(`Your IP address is ${ipAddress}`);
+        }
+
+        // Import file
         $("#importFile").change(function() {
             var file = document.getElementById("importFile").files[0];
             var fileType = file.name.split('.').pop().toLowerCase();
@@ -66,15 +87,15 @@
 <body>
 
     <body>
-        <header class="bg-blue-500 text-white p-4">
+        <header class="bg-red-500 text-white p-4">
             <div class="container mx-auto flex justify-between items-center">
                 <h1 class="text-2xl font-bold text-white">Hogwords</h1>
                 <div>
                     <input type="file" id="importFile" class="hidden" accept=".xml,.xlsx" />
-                    <label for="importFile" class="bg-white text-blue-500 py-2 px-4 rounded ml-2 cursor-pointer">
+                    <label for="importFile" class="bg-white text-red-500 py-2 px-4 rounded ml-2 cursor-pointer">
                         Importa dados
                     </label>
-                    <button class="bg-white text-blue-500 py-2 px-4 rounded ml-2">Action 2</button>
+                    <button class="bg-white text-red-500 py-2 px-4 rounded ml-2">Ações</button>
                 </div>
             </div>
         </header>
