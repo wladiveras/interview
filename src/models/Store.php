@@ -27,6 +27,27 @@ class Store
         return $result;
     }
 
+    public function firstOrCreate(array $data)
+    {
+
+        $this->database->query("SELECT id, name, location FROM stores WHERE id = :id");
+        $this->database->bind(":id", $data['store_id']);
+
+        $result = $this->database->single();
+
+        if (!$result) {
+            $this->database->query("INSERT INTO stores (name, location) VALUES (:name, :location)");
+            $this->database->bind(":name", $data['name']);
+            $this->database->bind(":location", $data['location']);
+
+            $this->database->execute();
+            return $this->database->lastInsertId();
+        }
+
+        return $result->id;
+
+    }
+
     public function getAllOrders()
     {
         $this->database->query("SELECT s.id, s.name, s.location, o.id, o.store_id, o.product_name, o.price, o.quantity, o.created_at FROM stores s LEFT JOIN orders o ON s.id = o.store_id  ORDER BY o.id DESC LIMIT 0,150");

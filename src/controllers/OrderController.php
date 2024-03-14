@@ -2,10 +2,24 @@
 
 class OrderController
 {
+    private $user;
+    private $order;
+    private $store;
+    private $parse;
+    private $response;
+
+    public function __construct()
+    {
+        $this->user = new User();
+        $this->order = new Order();
+        $this->store = new Store();
+        $this->parse = new Parse();
+        $this->response = new Response();
+
+    }
+
     public function create()
     {
-        $response = new Response();
-
         $type = $_POST['type'];
         $file = $_FILES['data'];
 
@@ -16,7 +30,7 @@ class OrderController
             if (isset($data)) {
                 $this->createOrder($data);
 
-                return $response->json([
+                return $this->response->json([
                     'status' => 'success',
                     'message' => 'Dados do arquivo importado com sucesso.',
                 ]);
@@ -24,18 +38,21 @@ class OrderController
         }
 
         if ($type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+
             $data = $this->importExcel($file);
 
-
             if (isset($data)) {
-                return $response->json([
+
+                $this->createOrder($data);
+
+                return $this->response->json([
                     'status' => 'success',
-                    'message' => $data,
+                    'message' => 'Dados do arquivo importado com sucesso.',
                 ]);
             }
         }
 
-        return $response->json([
+        return $this->response->json([
             'status' => 'error',
             'message' => 'Erro ao importar arquivo.',
         ]);
@@ -44,15 +61,16 @@ class OrderController
     // TODO: this can exist in a service file too, and can add a create a store if not exist instend sql file.
     private function importXml($file)
     {
-        $parse = new Parse();
 
-        $data = $parse->xmlToArray($file);
+        $data = $this->parse->xmlToArray($file);
 
         $result = [];
 
         foreach ($data['pedido'] as $value) {
             $result[] = [
                 'store_id' => $value['id_loja'],
+                'name' => $value['nome_loja'],
+                'location' => $value['localizacao'],
                 'product' => $value['produto'],
                 'quantity' => $value['quantidade'],
             ];
@@ -61,56 +79,34 @@ class OrderController
         return $result;
     }
 
-    private function importExcel($data)
+    private function importExcel($file)
     {
-        $type = $_POST['type'];
-        $file = $_FILES['file'];
-
-        $zip = new ZipArchive;
-        $res = $zip->open($file['tmp_name']);
-
-        if ($res === TRUE) {
-            $zip->extractTo('/path/to/extract/to');
-            $zip->close();
-
-            $xml = simplexml_load_file('/path/to/extract/to/xl/worksheets/sheet1.xml');
-            $rows = $xml->sheetData->row;
-
-            $csvFile = fopen('/path/to/save/file.csv', 'w');
-
-            foreach ($rows as $row) {
-                $data = [];
-
-                foreach ($row->c as $cell) {
-                    $data[] = (string) $cell->v;
-                }
-
-                fputcsv($csvFile, $data);
-            }
-
-            fclose($csvFile);
-        } else {
-            echo 'Failed to open file';
-
-        }
-
+        return $this->parse->parseExcel($file);
     }
 
     private function createOrder($data)
     {
-        $order = new Order();
+
         $result = [];
 
         foreach ($data as $value) {
+            if (isset($value['user_id'])) {
+                $userId = $this->user->firstOrCreate($value);
+            }
 
-            $prince = $value['price'] ?? 10 * $value['quantity'];
-            $result[] = $order->create([
-                'store_id' => $value['store_id'] ?? null,
-                'user_id' => $value['user_id'] ?? null,
+            if (isset($value['store_id'])) {
+                $storeId = $this->store->firstOrCreate($value);
+            }
+
+            $price = $this->parse->getCurrency($value['price']) ?? 10 * $value['quantity'];
+
+            $result[] = $this->order->create([
+                'store_id' => $storeId ?? null,
+                'user_id' => $userId ?? null,
                 'product_name' => $value['product'],
-                'price' => $prince,
+                'price' => $price,
                 'quantity' => $value['quantity'] ?? 1,
-                'created_at' => date('Y-m-d H:i:s'),
+                'created_at' => $value['last_order_at'] ?? date('Y-m-d H:i:s'),
             ]);
         }
 

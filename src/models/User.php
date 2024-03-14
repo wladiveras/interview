@@ -27,6 +27,27 @@ class User
         return $result;
     }
 
+    public function firstOrCreate(array $data)
+    {
+
+        $this->database->query("SELECT id, name, email FROM users WHERE id = :id");
+        $this->database->bind(":id", $data['user_id']);
+
+        $result = $this->database->single();
+
+        if (!$result) {
+            $this->database->query("INSERT INTO users (name, email) VALUES (:name, :email)");
+            $this->database->bind(":name", $data['name']);
+            $this->database->bind(":email", $data['email']);
+
+            $this->database->execute();
+            return $this->database->lastInsertId();
+        }
+
+        return $result->id;
+
+    }
+
     public function getAllOrders()
     {
         $this->database->query("SELECT u.id, u.name, u.email, o.id, o.user_id, o.product_name, o.price, o.quantity, o.created_at FROM users u LEFT JOIN orders o ON u.id = o.user_id ORDER BY o.id DESC LIMIT 0,150");
