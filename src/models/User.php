@@ -29,9 +29,9 @@ class User
 
     public function firstOrCreate(array $data)
     {
-
-        $this->database->query("SELECT id, name, email FROM users WHERE id = :id");
+        $this->database->query("SELECT id, name, email FROM users WHERE id = :id OR email LIKE :email");
         $this->database->bind(":id", $data['user_id']);
+        $this->database->bind(":email", '%' . $data['email'] . '%');
 
         $result = $this->database->single();
 

@@ -15,8 +15,6 @@
 
     <script>
     $(document).ready(function() {
-        $("h1").css("color", "#0088ff");
-
         $("#importFile").change(function() {
             var file = document.getElementById("importFile").files[0];
             var fileType = file.name.split('.').pop().toLowerCase();
@@ -66,52 +64,52 @@
 </head>
 
 <body>
-    <h1>
 
-        <input type="file" id="importFile" class="hidden" accept=".xml,.xlsx" />
-        <label for="importFile"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">
-            Importa dados
-        </label>
-    </h1>
-</body>
+    <body>
+        <header class="bg-blue-500 text-white p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-white">Hogwords</h1>
+                <div>
+                    <input type="file" id="importFile" class="hidden" accept=".xml,.xlsx" />
+                    <label for="importFile" class="bg-white text-blue-500 py-2 px-4 rounded ml-2 cursor-pointer">
+                        Importa dados
+                    </label>
+                    <button class="bg-white text-blue-500 py-2 px-4 rounded ml-2">Action 2</button>
+                </div>
+            </div>
+        </header>
+        <main class="container mx-auto p-4">
+
+            <table class="w-full border-collapse">
+                <thead>
+                    <tr>
+                        <th class="border p-4 text-left">Column 1</th>
+                        <th class="border p-4 text-left">Column 2</th>
+                        <th class="border p-4 text-left">Column 3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="border p-4">Row 1, Column 1</td>
+                        <td class="border p-4">Row 1, Column 2</td>
+                        <td class="border p-4">Row 1, Column 3</td>
+                    </tr>
+                    <tr>
+                        <td class="border p-4">Row 2, Column 1</td>
+                        <td class="border p-4">Row 2, Column 2</td>
+                        <td class="border p-4">Row 2, Column 3</td>
+                    </tr>
+                    <tr>
+                        <td class="border p-4">Row 3, Column 1</td>
+                        <td class="border p-4">Row 3, Column 2</td>
+                        <td class="border p-4">Row 3, Column 3</td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+        <footer class="fixed bottom-0 w-full bg-gray-200 text-gray-800 p-4">
+            &copy; 2024 Wladi Granger . All magic spells reserved.
+        </footer>
+    </body>
 
 </html>
-
-<!-- <pedidos>
-<pedido>
-<id_loja>001</id_loja>
-<nome_loja>Torre de Cristal</nome_loja>
-<localizacao>Planeta Zirak</localizacao>
-<produto>Cristais Místicos</produto>
-<quantidade>50</quantidade>
-</pedido>
-<pedido>
-<id_loja>002</id_loja>
-<nome_loja>Floresta Encantada</nome_loja>
-<localizacao>Reino de Elyria</localizacao>
-<produto>Poções de Juventude</produto>
-<quantidade>30</quantidade>
-</pedido>
-<pedido>
-<id_loja>003</id_loja>
-<nome_loja>Deserto dos Ventos</nome_loja>
-<localizacao>Planeta Kaitos</localizacao>
-<produto>Areia Mágica</produto>
-<quantidade>70</quantidade>
-</pedido>
-<pedido>
-<id_loja>004</id_loja>
-<nome_loja>Cavernas Submersas</nome_loja>
-<localizacao>Mundo Aquático de Neptar</localizacao>
-<produto>Pérolas de Energia</produto>
-<quantidade>40</quantidade>
-</pedido>
-<pedido>
-<id_loja>005</id_loja>
-<nome_loja>Vulcões Adormecidos</nome_loja>
-<localizacao>Ilhas de Fogo</localizacao>
-<produto>Lava Encantada</produto>
-<quantidade>20</quantidade>
-</pedido>
-</pedidos> -->
