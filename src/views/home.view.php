@@ -32,13 +32,13 @@
                     </label>
 
                     <button id="filterByOrderId" class="bg-white text-red-500 py-2 px-4 rounded ml-2">
-                        Filtar Pedido
+                        Filtrar Pedido
                     </button>
                     <button id="filterByUserId" class="bg-white text-red-500 py-2 px-4 rounded ml-2">
-                        Filtar bruxo
+                        Filtrar bruxo
                     </button>
                     <button id="filterByStoreId" class="bg-white text-red-500 py-2 px-4 rounded ml-2">
-                        Filtar loja
+                        Filtrar loja
                     </button>
                 </div>
             </div>
