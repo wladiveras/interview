@@ -30,8 +30,10 @@
                     <label for="importFile" class="bg-white text-red-500 py-2 px-4 rounded ml-2 cursor-pointer">
                         Importa dados
                     </label>
-                    <button class="bg-white text-red-500 py-2 px-4 rounded ml-2">Filtar bruxo</button>
-                    <button class="bg-white text-red-500 py-2 px-4 rounded ml-2">Filtar loja</button>
+                    <button id="filterByUserId" class="bg-white text-red-500 py-2 px-4 rounded ml-2">Filtar
+                        bruxo</button>
+                    <button id="filterByStoreId" class="bg-white text-red-500 py-2 px-4 rounded ml-2">Filtar
+                        loja</button>
                 </div>
             </div>
         </header>
@@ -39,15 +41,7 @@
 
             <table class="w-full border-collapse">
                 <thead>
-                    <tr>
-                        <th class="border p-4 text-left">#ID</th>
-                        <th class="border p-4 text-left">#ID loja</th>
-                        <th class="border p-4 text-left">#ID Bruxo</th>
-                        <th class="border p-4 text-left">Produto</th>
-                        <th class="border p-4 text-left">Valor</th>
-                        <th class="border p-4 text-left">Quantidade</th>
-                        <th class="border p-4 text-left">Data</th>
-                    </tr>
+
                 </thead>
                 <tbody>
 
