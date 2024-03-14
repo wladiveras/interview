@@ -43,7 +43,7 @@ $(document).ready(function () {
       allowOutsideClick: () => !Swal.isLoading(),
     }).then((result) => {
       if (result.value && result.value.data[0]) {
-        generateTableData(result.value.data[0].orders, "store");
+        generateTableData(result.value.data[0].orders, "user");
       } else {
         Toast.fire({
           icon: "error",
