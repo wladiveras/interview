@@ -255,8 +255,9 @@ $(document).ready(function () {
     if (response) {
       for (var i = 0; i < response.length; i++) {
         allOrders += "<tr>";
-
-        allOrders += '<td class="border p-4">' + response[i].id + "</td>";
+        if (type === "all") {
+          allOrders += '<td class="border p-4">' + response[i].id + "</td>";
+        }
         if (type === "store" || type === "all") {
           allOrders +=
             '<td class="border p-4">' + response[i].store_id + "</td>";
@@ -275,7 +276,9 @@ $(document).ready(function () {
       }
 
       allHeaders += "<tr>";
-      allHeaders += '<th class="border p-4 text-left">#ID</th>';
+      if (type === "all") {
+        allHeaders += '<th class="border p-4 text-left">#ID</th>';
+      }
       if (type === "store" || type === "all") {
         allHeaders += '<th class="border p-4 text-left">#ID loja</th>';
       }
