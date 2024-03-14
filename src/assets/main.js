@@ -11,6 +11,24 @@ $(document).ready(function () {
     },
   });
 
+  $("#home-page").click(async function () {
+    var response = await fetch(`${API_URL}/all-orders`);
+    var response = await response.json();
+
+    if (response.status === "error") {
+      Toast.fire({
+        icon: "error",
+        title: "Parece que os dementadores estão atacando.",
+      });
+    }
+
+    if (response.data) {
+      generateTableData(response.data);
+    }
+  });
+
+  $("#data-info").addClass("hidden");
+
   // Filter by User
   $("#filterByUserId").click(function () {
     $("#data-info").addClass("hidden");
@@ -87,8 +105,8 @@ $(document).ready(function () {
       },
       allowOutsideClick: () => !Swal.isLoading(),
     }).then((result) => {
-      if (result.value && result.value.data[0]) {
-        generateTableData(result.value.data[0].orders);
+      if (result.value && result.value.data) {
+        generateTableData(result.value.data);
       } else {
         Toast.fire({
           icon: "error",
@@ -230,7 +248,9 @@ $(document).ready(function () {
           confirmButtonText: hasError ? "Tudo bem..." : "Maravilha!",
         });
 
-        $("#data-info").addClass("hidden");
+        setTimeout(function () {
+          location.reload();
+        }, 3000);
       },
     });
   });
@@ -247,7 +267,7 @@ $(document).ready(function () {
       $("#data-info").removeClass("hidden");
     }
   }
-  // Generate Table
+  // TODO: Add some cache in backend to reduce consume, example using redis.
   function generateTableData(response, type = "all") {
     var allHeaders = "";
     var allOrders = "";

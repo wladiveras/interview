@@ -24,11 +24,11 @@
     <body>
         <header class="bg-red-500 text-white p-4">
             <div class="container mx-auto flex justify-between items-center">
-                <h1 class="text-2xl font-bold text-white">Hogwords</h1>
+                <h1 id="home-page" class="text-2xl font-bold text-white cursor-pointer">Hogwords</h1>
                 <div>
                     <input type="file" id="importFile" class="hidden" accept=".xml,.xlsx" />
                     <label for="importFile" class="bg-white text-red-500 py-2 px-4 rounded ml-2 cursor-pointer">
-                        Importa dados
+                        Invocar Informações
                     </label>
 
                     <button id="filterByOrderId" class="bg-white text-red-500 py-2 px-4 rounded ml-2">

@@ -33,7 +33,7 @@ class HomeController
     {
         $order = $this->order->getById($request['id']);
 
-        $this->response->json($order);
+        $this->response->json([$order]);
     }
 
     public function getUserOrders($request)
