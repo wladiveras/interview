@@ -31,7 +31,7 @@ class OrderController
 
                 return $this->response->json([
                     'status' => 'success',
-                    'message' => 'Dados do arquivo importado com sucesso.',
+                    'message' => 'As lojas mágicas e seus pedidos chegaram.',
                 ]);
             }
         }
@@ -46,7 +46,7 @@ class OrderController
 
                 return $this->response->json([
                     'status' => 'success',
-                    'message' => 'Dados do arquivo importado com sucesso.',
+                    'message' => 'Os bruxos e seus pedidos chegaram.',
                 ]);
             }
         }

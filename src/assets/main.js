@@ -55,6 +55,49 @@ $(document).ready(function () {
     });
   });
 
+  // Filter by Order Id
+  $("#filterByOrderId").click(function () {
+    $("#data-info").addClass("hidden");
+    Swal.fire({
+      icon: "question",
+      title: "Invocar Pedido",
+      input: "number",
+      inputLabel: "Informe o id do Pedido para invocar",
+      inputAttributes: {
+        autocapitalize: "off",
+      },
+      showCancelButton: true,
+      confirmButtonText: "Invocar",
+      cancelButtonText: "Cancelar",
+      showLoaderOnConfirm: true,
+      preConfirm: (id) => {
+        return fetch(`${API_URL}/order/${id}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(response.statusText);
+            }
+            return response.json();
+          })
+          .catch((error) => {
+            Toast.fire({
+              icon: "error",
+              title: "Parece que os dementadores estão atacando.",
+            });
+          });
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    }).then((result) => {
+      if (result.value && result.value.data[0]) {
+        generateTableData(result.value.data[0].orders);
+      } else {
+        Toast.fire({
+          icon: "error",
+          title: "Parece que esse pedido é apenas uma ilusão.",
+        });
+      }
+    });
+  });
+
   // Filter by Store
   $("#filterByStoreId").click(async function () {
     $("#data-info").addClass("hidden");
@@ -129,7 +172,8 @@ $(document).ready(function () {
           if (hasError) {
             Toast.fire({
               icon: "error",
-              title: "Pedidos Mágicos não invocados!",
+              title:
+                "Não há pedidos mágicos no momento, tente invocar... digo, importar alguma magia.",
             });
             return;
           }

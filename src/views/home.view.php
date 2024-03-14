@@ -30,10 +30,16 @@
                     <label for="importFile" class="bg-white text-red-500 py-2 px-4 rounded ml-2 cursor-pointer">
                         Importa dados
                     </label>
-                    <button id="filterByUserId" class="bg-white text-red-500 py-2 px-4 rounded ml-2">Filtar
-                        bruxo</button>
-                    <button id="filterByStoreId" class="bg-white text-red-500 py-2 px-4 rounded ml-2">Filtar
-                        loja</button>
+
+                    <button id="filterByOrderId" class="bg-white text-red-500 py-2 px-4 rounded ml-2">
+                        Filtar Pedido
+                    </button>
+                    <button id="filterByUserId" class="bg-white text-red-500 py-2 px-4 rounded ml-2">
+                        Filtar bruxo
+                    </button>
+                    <button id="filterByStoreId" class="bg-white text-red-500 py-2 px-4 rounded ml-2">
+                        Filtar loja
+                    </button>
                 </div>
             </div>
         </header>
