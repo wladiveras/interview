@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>
-        Hogwards Store: <?php echo $data['name']; ?>
+        Hogwards Magic Worlds
     </title>
 
     <script>
@@ -38,14 +38,23 @@
             </div>
         </header>
         <main class="container mx-auto p-4 mb-[5rem]">
-
+            <div id="data-info" class="grid grid-cols-1 gap-4 items-center justify-center bg-transparent hidden">
+                <div class="bg-white p-8 rounded-lg flex justify-center items-center">
+                    <div class="ml-3">
+                        <div class="mb-3">
+                            <img class="h-50 w-50 rounded-full m-auto" src="https://source.unsplash.com/random/100x100"
+                                alt="Random User" />
+                        </div>
+                        <div class="ml-3">
+                            <p id="name" class="text-sm font-medium text-slate-900 text-center"></p>
+                            <p id="description" class="text-sm text-slate-700 text-center"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <table class="w-full border-collapse">
-                <thead>
-
-                </thead>
-                <tbody>
-
-                </tbody>
+                <thead></thead>
+                <tbody></tbody>
             </table>
         </main>
         <footer class="fixed bottom-0 w-full bg-gray-200 text-gray-800 p-4">

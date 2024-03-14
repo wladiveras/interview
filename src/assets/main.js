@@ -13,6 +13,7 @@ $(document).ready(function () {
 
   // Filter by User
   $("#filterByUserId").click(function () {
+    $("#data-info").addClass("hidden");
     Swal.fire({
       icon: "question",
       title: "Invocar Bruxo",
@@ -43,6 +44,7 @@ $(document).ready(function () {
       allowOutsideClick: () => !Swal.isLoading(),
     }).then((result) => {
       if (result.value && result.value.data[0]) {
+        generateInfo(result.value.data[0], "user");
         generateTableData(result.value.data[0].orders, "user");
       } else {
         Toast.fire({
@@ -55,6 +57,7 @@ $(document).ready(function () {
 
   // Filter by Store
   $("#filterByStoreId").click(async function () {
+    $("#data-info").addClass("hidden");
     Swal.fire({
       icon: "question",
       title: "Invocar Loja",
@@ -85,6 +88,7 @@ $(document).ready(function () {
       allowOutsideClick: () => !Swal.isLoading(),
     }).then((result) => {
       if (result.value && result.value.data[0]) {
+        generateInfo(result.value.data[0], "store");
         generateTableData(result.value.data[0].orders, "store");
       } else {
         Toast.fire({
@@ -168,23 +172,37 @@ $(document).ready(function () {
       dataType: "json",
 
       success: function (response) {
-        if (typeof response.message !== "string") {
+        if (typeof response.data.message !== "string") {
           console.error("Error parsing response:", response);
           return;
         }
 
         var hasError = response.status === "error";
-
+        console.log({ test: response.data });
         Swal.fire({
           title: hasError ? "Mal feito, feito!" : "Luminous!",
-          text: response.message,
-          icon: response.status,
+          text: response.data.message,
+          icon: response.data.status,
           confirmButtonText: hasError ? "Tudo bem..." : "Maravilha!",
         });
+
+        $("#data-info").addClass("hidden");
       },
     });
   });
 
+  function generateInfo(response, type = "user") {
+    if (response) {
+      if (type === "store") {
+        $("#name").html(response.name);
+        $("#description").html(response.location);
+        $("#data-info").removeClass("hidden");
+      }
+      $("#name").html(response.name);
+      $("#description").html(response.email);
+      $("#data-info").removeClass("hidden");
+    }
+  }
   // Generate Table
   function generateTableData(response, type = "all") {
     var allHeaders = "";
